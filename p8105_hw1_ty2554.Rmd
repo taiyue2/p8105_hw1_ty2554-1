@@ -1,0 +1,79 @@
+---
+title: "p8105_hw1_ty2554"
+author: "Tai Yue"
+date: "2024-09-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+problem1:
+```{r}
+data("penguins", package = "palmerpenguins")
+```
+
+
+```{r}
+
+nrow(penguins)  
+ncol(penguins)  
+mean(penguins$flipper_length_mm, na.rm = TRUE) 
+
+
+```
+
+The penguins dataset contains 'r nrow(penguins)' observations and r ncol(penguins) variables. Important variables include:
+
+species: Types of penguins ,
+island: Location of penguin observation,
+bill_length_mm: Length of the penguin's bill in millimeters,
+flipper_length_mm: Length of the penguin's flipper in millimeters, with a mean of 'r mean(penguins$flipper_length_mm, na.rm = TRUE)' mm,
+body_mass_g: Weight of the penguin in grams,
+sex: The penguin's gender.
+
+```{r}
+
+library(ggplot2)
+
+ggplot(data = penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+  geom_point() +
+  labs(title = "Flipper Length vs Bill Length by Species",
+       x = "Bill Length (mm)",
+       y = "Flipper Length (mm)") +
+  theme_minimal()
+
+ggsave(ggsave("Flipper Length vs Bill Length by Species.png", plot =last_plot(), width = 12, height = 10))
+
+```
+```{r}
+
+
+library(tidyverse)
+
+random_sample <- rnorm(10)
+
+logical_vector <- random_sample > 0
+
+char_vector <- sample(letters, 10)
+
+factor_vector <- factor(sample(c("Level1", "Level2", "Level3"), 10, replace = TRUE))
+
+df <- data.frame(random_sample, logical_vector, char_vector, factor_vector)
+print(df)
+
+mean(df$random_sample) 
+mean(df$logical_vector) 
+mean(df$char_vector)     
+mean(df$factor_vector)   
+mean(as.numeric(df$logical_vector))  
+mean(as.numeric(df$char_vector))     
+mean(as.numeric(df$factor_vector))   
+
+```
+The mean function works for numeric and logical vectors because R can coerce logical values to numeric.
+It fails for character and factor vectors unless you explicitly convert them to numeric values. The as.numeric() conversion helps explain why the mean works for logical vectors and why it doesn’t work for character or factor variables without conversion. For factors, coercion leads to the use of underlying integer codes, which may not always represent meaningful values for averaging.
+
+
+
+
